@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#04060f;--card:#080c1a;--green:#10d98a;--green2:#059669;
+  --red:#f87171;--blue:#60a5fa;--amber:#fbbf24;
+  --border:rgba(16,217,138,0.12);--text:#dde6f0;--muted:#4b5a6b
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+/* HERO */
+.hero{position:relative;padding:5rem 2rem 4rem;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 140% 60% at 50% -10%,rgba(16,217,138,0.08) 0%,rgba(96,165,250,0.05) 50%,transparent 70%)}
+.grid-pat{position:absolute;inset:0;background-image:linear-gradient(rgba(16,217,138,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(16,217,138,0.03) 1px,transparent 1px);background-size:36px 36px;pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:1.2rem;display:flex;align-items:center;justify-content:center;gap:8px}
+.hero h1{font-size:clamp(2.8rem,7vw,4.8rem);font-weight:900;line-height:1.05;letter-spacing:-.03em;background:linear-gradient(135deg,#fff 20%,#a7f3d0 60%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.6rem}
+.hero-role{font-size:1rem;color:var(--muted);margin-bottom:.5rem}
+.hero-tagline{font-size:1.15rem;font-weight:500;color:#9db5c8;max-width:640px;margin:0 auto 2rem;line-height:1.6}
+.hero-tagline em{color:var(--green);font-style:normal}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tc{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);color:#6b7d8e;border-radius:6px;font-size:12px;font-weight:500;padding:4px 12px}
+.tc.hi{border-color:rgba(16,217,138,0.3);color:var(--green);background:rgba(16,217,138,0.06)}
+.tc.hi2{border-color:rgba(248,113,113,0.3);color:var(--red);background:rgba(248,113,113,0.05)}
+.tc.hi3{border-color:rgba(96,165,250,0.3);color:var(--blue);background:rgba(96,165,250,0.05)}
+
+/* STAT BAR */
+.statbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));background:#060910;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat{padding:1.3rem .8rem;text-align:center;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.sn{display:block;font-size:1.8rem;font-weight:900;line-height:1;background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:4px}
+
+/* CALLOUT */
+.callout{max-width:820px;margin:3rem auto;padding:1.8rem 2rem;background:rgba(16,217,138,0.05);border:1px solid rgba(16,217,138,0.18);border-radius:14px;text-align:center;position:relative}
+.callout-label{font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:.8rem}
+.callout p{font-size:.98rem;color:#8ba0b2;line-height:1.7}
+.callout strong{color:var(--text);font-weight:600}
+
+/* SECTIONS */
+.sec{padding:2.5rem 2rem;max-width:1100px;margin:0 auto}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:1.8rem;padding-bottom:1rem;border-bottom:1px solid rgba(16,217,138,0.08)}
+.si{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.si-g{background:rgba(16,217,138,0.1)}
+.si-r{background:rgba(248,113,113,0.1)}
+.si-b{background:rgba(96,165,250,0.1)}
+.si-a{background:rgba(251,191,36,0.1)}
+.sh-title{font-size:1.15rem;font-weight:700;color:#fff}
+.sh-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.divider{height:1px;background:rgba(16,217,138,0.06)}
+
+/* CARDS */
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.3rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
+.card:hover{border-color:rgba(16,217,138,0.25);transform:translateY(-2px)}
+.ct{position:absolute;top:0;left:0;right:0;height:2px}
+.ct-g{background:linear-gradient(90deg,var(--green),var(--green2))}
+.ct-r{background:linear-gradient(90deg,var(--red),#dc2626)}
+.ct-b{background:linear-gradient(90deg,var(--blue),#2563eb)}
+.ct-a{background:linear-gradient(90deg,var(--amber),#d97706)}
+.cpub{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px;color:var(--muted);flex-wrap:wrap}
+.d{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.d-dl{background:var(--green)}.d-tb{background:var(--blue)}.d-ct{background:#f97316}
+.card h3{font-size:14px;font-weight:600;color:#dde6f0;line-height:1.4;margin-bottom:8px}
+.card p{font-size:12px;color:var(--muted);line-height:1.6}
+.cfoot{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.chip{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em}
+.ch-g{background:rgba(16,217,138,0.1);color:var(--green)}
+.ch-r{background:rgba(248,113,113,0.1);color:var(--red)}
+.ch-b{background:rgba(96,165,250,0.1);color:var(--blue)}
+.ch-a{background:rgba(251,191,36,0.1);color:var(--amber)}
+.clink{font-size:11px;color:#2d3f50;text-decoration:none}
+.clink:hover{color:var(--green)}
+
+/* INCIDENT CARD - FULL WIDTH FEATURE */
+.incident{background:linear-gradient(135deg,#08111e,#060d16);border:1px solid rgba(248,113,113,0.2);border-radius:14px;padding:1.8rem;position:relative;overflow:hidden;margin-bottom:14px}
+.incident::before{content:'';position:absolute;top:-80px;right:-80px;width:250px;height:250px;background:radial-gradient(circle,rgba(248,113,113,0.06),transparent 70%);pointer-events:none}
+.inc-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.incident h3{font-size:1.05rem;font-weight:700;color:#fff;line-height:1.4;margin-bottom:10px}
+.incident p{font-size:13px;color:#5a6e80;line-height:1.65}
+.badge-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.badge{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;color:#7a9db5}
+
+/* ATTACK TYPE GRID */
+.atk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:1.5rem}
+.atk{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden}
+.atk::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--blue))}
+.atk-icon{font-size:20px;margin-bottom:8px}
+.atk h4{font-size:13px;font-weight:600;color:#dde6f0;margin-bottom:4px}
+.atk p{font-size:12px;color:var(--muted);line-height:1.5}
+.atk-tag{font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+
+/* ONCHAIN TABLE */
+.onchain{background:var(--card);border:1px solid rgba(96,165,250,0.15);border-radius:12px;padding:1.5rem;margin-top:1rem}
+.oc-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:1.2rem;display:flex;align-items:center;gap:6px}
+.oc-row{display:flex;align-items:flex-start;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.oc-row:last-child{border-bottom:none}
+.oc-num{width:28px;height:28px;border-radius:6px;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.2);color:var(--blue);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.oc-content h4{font-size:13px;font-weight:600;color:#dde6f0;margin-bottom:3px}
+.oc-content p{font-size:12px;color:var(--muted);line-height:1.5}
+.oc-amount{font-size:12px;font-weight:700;color:var(--green);margin-top:4px}
+
+/* HIGHLIGHTS */
+.hl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:1.5rem}
+.hl{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:1.2rem;display:flex;gap:12px}
+.chk{width:26px;height:26px;border-radius:6px;background:rgba(16,217,138,0.1);border:1px solid rgba(16,217,138,0.2);color:var(--green);font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.hl h4{font-size:13px;font-weight:600;color:#dde6f0;margin-bottom:4px}
+.hl p{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* SYND */
+.synd{background:#060910;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.5rem 2rem}
+.synd-label{font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:1rem;text-align:center}
+.synd-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.sb{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);color:#6b7d8e;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600}
+.sb.top{border-color:rgba(16,217,138,0.3);color:var(--green);background:rgba(16,217,138,0.05)}
+
+/* CLOSING */
+.close{max-width:740px;margin:3rem auto;padding:2.5rem;background:linear-gradient(135deg,#080f1a,#060c16);border:1px solid rgba(16,217,138,0.2);border-radius:16px;text-align:center;position:relative;overflow:hidden}
+.close::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(16,217,138,0.06),transparent 70%)}
+.close h2{font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:.8rem;line-height:1.3}
+.close p{font-size:.95rem;color:#5a6e80;line-height:1.7;margin-bottom:1.5rem}
+.tag-wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.ctag{display:inline-flex;align-items:center;gap:5px;background:rgba(16,217,138,0.07);border:1px solid rgba(16,217,138,0.2);color:#a7d9c8;border-radius:6px;font-size:12px;font-weight:600;padding:3px 10px}
+
+/* FOOTER */
+.footer{background:#030508;border-top:1px solid var(--border);padding:3rem 2rem;text-align:center}
+.fn{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:4px}
+.fr{font-size:13px;color:#2d3f50;margin-bottom:2rem}
+.cta{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--green2),#065f46);color:#fff;padding:13px 30px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;margin-bottom:2rem;transition:opacity .2s}
+.cta:hover{opacity:.85}
+.contacts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:1.5rem}
+.cbtn{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);color:#6b7d8e;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s}
+.cbtn:hover{border-color:rgba(16,217,138,0.35);color:var(--green)}
+.cbtn.li{background:#0a66c2;border-color:#0a66c2;color:#fff}
+.pub-links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.pub-links a{font-size:12px;color:#2d3f50;text-decoration:none}
+.pub-links a:hover{color:var(--green)}
+a{text-decoration:none;color:inherit}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-pat"></div>
+  <div class="hero-eyebrow">🔐 Blockchain Security Writing</div>
+  <h1>Osato Avan-Nomayo</h1>
+  <p class="hero-role">DeFi Correspondent · Crypto Security Reporter · Web3 Journalist</p>
+  <p class="hero-tagline">He has reported on <em>billions of dollars in crypto hacks</em>. He tracks attacker wallets in real time. He explains how exploits work in words anyone can understand.</p>
+  <div class="tag-cloud">
+    <span class="tc hi">🔐 Smart Contract Exploits</span>
+    <span class="tc hi">⛓️ On-chain Forensics</span>
+    <span class="tc hi2">🚨 Flash Loan Attacks</span>
+    <span class="tc hi2">🔑 Private Key Compromise</span>
+    <span class="tc hi2">🌉 Bridge Vulnerabilities</span>
+    <span class="tc hi3">📊 TRM Labs Data Analysis</span>
+    <span class="tc hi3">🕵️ Threat Attribution</span>
+    <span class="tc hi">📝 Technical Writing</span>
+    <span class="tc">🌍 10 yrs Web3</span>
+    <span class="tc">✍️ 7 yrs Journalism</span>
+    <span class="tc">🔬 Chemical Engineering</span>
+  </div>
+</div>
+
+<!-- STAT BAR -->
+<div class="statbar">
+  <div class="stat"><span class="sn">$2.5B+</span><span class="sl">Hacks Reported On</span></div>
+  <div class="stat"><span class="sn">8+</span><span class="sl">Major Incidents</span></div>
+  <div class="stat"><span class="sn">3,000+</span><span class="sl">Articles Published</span></div>
+  <div class="stat"><span class="sn">10</span><span class="sl">Years in Web3</span></div>
+  <div class="stat"><span class="sn">12+</span><span class="sl">Outlets Syndicated</span></div>
+  <div class="stat"><span class="sn">30%</span><span class="sl">Traffic Growth</span></div>
+</div>
+
+<!-- CALLOUT -->
+<div class="callout" style="margin:3rem 2rem">
+  <div class="callout-label">Why This Matters to Hacken</div>
+  <p>Hacken needs a writer who already understands how attacks happen. Osato has spent years reporting on real exploits. He knows what a reentrancy attack is. He knows how flash loans get weaponised. He has read live on-chain data during active hacks and written about it clearly for a general audience. <strong>He does not need to learn the subject. He is already in it.</strong></p>
+</div>
+
+<div class="divider"></div>
+
+<!-- THE RECORD REPORT -->
+<div class="sec">
+  <div class="sh">
+    <div class="si si-r">📋</div>
+    <div>
+      <div class="sh-title">The Definitive 2025 Hack Record Report</div>
+      <div class="sh-sub">Osato co-authored the most-cited security report of 2025 alongside TRM Labs data.</div>
+    </div>
+  </div>
+
+  <div class="incident" style="border-color:rgba(96,165,250,0.2);margin-bottom:1rem">
+    <div class="inc-label" style="color:var(--blue)">📊 Flagship Security Report · DL News · June 2025</div>
+    <h3>Hackers already bagged a record $2.1 billion in stolen crypto this year, says TRM Labs</h3>
+    <p>Osato reported the most important blockchain security story of 2025. Using TRM Labs forensic data, DefiLlama tracking, and independent on-chain analysis, he documented the worst six months in crypto security history. The report covered the Bybit $1.4 billion infrastructure attack, Bitget's $100 million private key breach, and the finding that 80% of all stolen funds came from private key compromises. He explained why infrastructure attacks now average ten times the size of smart contract exploits, and connected state-sponsored hacking groups to the wider threat landscape. The story was widely picked up across financial and crypto media.</p>
+    <div class="badge-row">
+      <span class="badge" style="color:var(--blue);border-color:rgba(96,165,250,0.2)">📈 Record H1 2025</span>
+      <span class="badge" style="color:var(--blue);border-color:rgba(96,165,250,0.2)">🔑 Private key analysis</span>
+      <span class="badge" style="color:var(--blue);border-color:rgba(96,165,250,0.2)">🌍 75 incidents covered</span>
+      <span class="badge" style="color:var(--blue);border-color:rgba(96,165,250,0.2)">📊 TRM Labs forensics</span>
+      <span class="badge" style="color:var(--blue);border-color:rgba(96,165,250,0.2)">💰 $2.1B total documented</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MAJOR INCIDENTS -->
+<div class="sec">
+  <div class="sh">
+    <div class="si si-r">🚨</div>
+    <div>
+      <div class="sh-title">Major Hack Coverage</div>
+      <div class="sh-sub">Eight significant security incidents, each reported with on-chain verification and technical precision.</div>
+    </div>
+  </div>
+
+  <!-- Maths Investigation - full width feature -->
+  <div class="incident" style="margin-bottom:14px;border-color:rgba(251,191,36,0.25)">
+    <div class="inc-label" style="color:var(--amber)">🔬 Investigative Feature · DL News · Multi-source Expert Interviews</div>
+    <h3>DeFi protocols continue to get hacked due to the same basic maths problem</h3>
+    <p>This is the article that shows Osato does more than break news. He interviewed multiple smart contract security experts to investigate why the same class of vulnerability keeps getting exploited across the industry. The vulnerability is precision loss: Solidity uses only integers, so any division that produces a fraction gets rounded down. Attackers use flash loans to run that rounding error thousands of times in a single block, turning tiny fractions into large stolen sums. Osato spoke with security expert Webb, who called for a "cultural change" treating rounding errors with the same urgency as reentrancy attacks. Smart contract auditor Joe Dakwa told DL News that fuzz testing and invariant testing should become standard practice. The article documented a pattern of attacks across Raft Finance ($3.6M flash loan exploit), Midas Capital, Onyx Protocol, Compound Finance forks, and Hundred Finance, all hit by the same underlying maths flaw. This is exactly the kind of systemic security analysis Hacken publishes in its threat landscape reports.</p>
+    <div class="badge-row">
+      <span class="badge" style="color:var(--amber);border-color:rgba(251,191,36,0.2)">🎙️ Multiple expert interviews</span>
+      <span class="badge" style="color:var(--amber);border-color:rgba(251,191,36,0.2)">🔢 Precision loss analysis</span>
+      <span class="badge" style="color:var(--amber);border-color:rgba(251,191,36,0.2)">6 protocols investigated</span>
+      <span class="badge" style="color:var(--amber);border-color:rgba(251,191,36,0.2)">⚡ Flash loan attack mechanics</span>
+      <span class="badge" style="color:var(--amber);border-color:rgba(251,191,36,0.2)">🛡️ Remediation coverage</span>
+    </div>
+    <div style="margin-top:10px"><a href="https://www.dlnews.com/articles/defi/hackers-continue-to-profit-from-defi-developers-math-problem/" target="_blank" class="clink" style="color:var(--amber);font-size:12px">Read on DL News ↗</a></div>
+  </div>
+
+  <!-- Cetus - full width -->
+  <div class="incident" style="margin-bottom:14px">
+    <div class="inc-label">🔍 Forensic Report · DL News · 2025</div>
+    <h3>How an attacker used fake tokens to siphon $220M from Sui's Cetus exchange</h3>
+    <p>Osato rebuilt the entire attack from scratch using on-chain data. He identified how the attacker created counterfeit tokens, used them to drain liquidity pools, bridged the funds cross-chain to Ethereum, converted to USDC, and left $37 million sitting in a traceable wallet. Each step was verified independently from blockchain data before publication. This is the kind of attack chain walkthrough that Hacken's content team produces after audits. Osato already writes these for a public audience.</p>
+    <div class="badge-row">
+      <span class="badge">🔗 Cross-chain tracking</span>
+      <span class="badge">🪙 Fake token mechanism</span>
+      <span class="badge">💸 $220M largest 2025 DeFi hack</span>
+      <span class="badge">📍 $37M wallet located</span>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="ct ct-a"></div>
+      <div class="cpub"><span class="d d-dl"></span> DL News · May 2026</div>
+      <h3>DxSale $7.3M BNB Chain drain — a 2023 Decurity warning that went unheeded for three years</h3>
+      <p>Osato reported on the $7.3M drain of over 1,400 legacy liquidity locker positions on BNB Chain. The exploit used a hidden backdoor: contract ownership had been silently transferred 269 days before the attack, passing through 80 intermediate wallets to obscure the trail. The attacker reset the lock fee to 1 wei, backdated lock expiry timestamps, and drained pooled BNB in a single orchestrated transaction. Security firm Decurity had disclosed the core risk in DxSale's locking mechanism back in 2023. The vulnerability sat unpatched for years in contracts holding funds from over 1,400 liquidity providers. Possible insider involvement was flagged by on-chain researchers. This story demonstrates Osato's ability to cover legacy contract risks, access control failures, and the long tail of unpatched DeFi infrastructure.</p>
+      <div class="cfoot"><span class="chip ch-a">Access Control · Backdoor · BNB Chain</span><a href="https://muckrack.com/osato-avan-nomayo/articles" target="_blank" class="clink">Read ↗</a></div>
+    </div>
+      <p>Osato tracked the attacker in real time as they moved across 27 vulnerable Balancer forks. He reported the breach before the full scope was public. His headline, "despite multiple audits," became part of the wider industry conversation about audit coverage gaps. Hacken had been part of Balancer's audit history, making this a relevant piece of writing for the company.</p>
+      <div class="cfoot"><span class="chip ch-r">Smart Contract · 27 Forks</span><a href="https://www.dlnews.com/articles/defi/balancer-suffers-128m-exploit-despite-multiple-audits/" target="_blank" class="clink">Read ↗</a></div>
+    </div>
+
+    <div class="card">
+      <div class="ct ct-r"></div>
+      <div class="cpub"><span class="d d-dl"></span> DL News · 2025</div>
+      <h3>Yearn Finance $9M infinite mint attack — 235 trillion yETH created from a maths bug</h3>
+      <p>A maths error in the yETH smart contract let the attacker mint 235 trillion tokens out of thin air. Osato explained the infinite mint mechanism clearly, tracked $8 million drained from the StableSwap pool in a single transaction, and identified $3 million sent to Tornado Cash before Yearn confirmed the attack publicly.</p>
+      <div class="cfoot"><span class="chip ch-r">Infinite Mint · Smart Contract Bug</span><a href="https://www.dlnews.com/articles/defi/yearn-finance-looted-for-9m-after-attacker-minted-trillions/" target="_blank" class="clink">Read ↗</a></div>
+    </div>
+
+    <div class="card">
+      <div class="ct ct-b"></div>
+      <div class="cpub"><span class="d d-dl"></span> DL News · 2024</div>
+      <h3>Stake.com $41M hack — crypto casino breached, co-founder says private keys stayed safe</h3>
+      <p>Osato secured a direct quote from Stake.com co-founder Edward Craven and broke the technical details of the breach: the attacker targeted the transaction-authorisation service across Ethereum, BNB Chain, and Polygon. His reporting was the first to accurately separate the compromised hot wallet from the private key infrastructure.</p>
+      <div class="cfoot"><span class="chip ch-b">Wallet Compromise · 3 Chains</span><a href="https://www.dlnews.com/articles/defi/stake-co-founder-says-hacker-did-not-compromise-private-keys/" target="_blank" class="clink">Read ↗</a></div>
+    </div>
+
+    <div class="card">
+      <div class="ct ct-a"></div>
+      <div class="cpub"><span class="d d-dl"></span> DL News · 2025</div>
+      <h3>Nomad Bridge $190M exploiter arrested in Israel — faces money laundering and computer crime charges</h3>
+      <p>Osato reported the arrest of the Nomad Bridge exploiter and the legal case that followed. He had previously used Coinbase on-chain data to enumerate 88 copycat wallet addresses that extracted $88 million through the same vulnerability during the original 2022 attack.</p>
+      <div class="cfoot"><span class="chip ch-a">Bridge Exploit · $190M</span><a href="https://www.dlnews.com/articles/defi/hacker-behind-190m-nomad-bridge-exploit-arrested-in-israel/" target="_blank" class="clink">Read ↗</a></div>
+    </div>
+
+    <div class="card">
+      <div class="ct ct-b"></div>
+      <div class="cpub"><span class="d d-dl"></span> DL News · 2025</div>
+      <h3>Did North Korean cybercriminals hack Upbit for $36M? The Naver timing is hard to ignore.</h3>
+      <p>Osato cross-referenced exchange data with geopolitical timing. The $36 million hack happened at the same time Naver was completing its $10 billion takeover of Upbit's parent company. He connected the dots to Lazarus Group involvement well before official attribution.</p>
+      <div class="cfoot"><span class="chip ch-b">Lazarus Group · Nation State</span><a href="https://muckrack.com/osato-avan-nomayo/articles" target="_blank" class="clink">Read ↗</a></div>
+    </div>
+
+    <div class="card">
+      <div class="ct ct-r"></div>
+      <div class="cpub"><span class="d d-dl"></span> DL News · 2025</div>
+      <h3>Sui network votes to hack the Cetus hacker and return $160M to users</h3>
+      <p>After the initial Cetus exploit report, Osato covered the governance response: Sui validators voted to reverse the theft at the protocol level. This follow-up piece showed his ability to track a security incident through all its phases, from exploit to recovery, which is what Hacken's case study content does.</p>
+      <div class="cfoot"><span class="chip ch-r">Governance Response · Recovery</span><a href="https://www.dlnews.com/articles/defi/sui-validators-votes-hack-the-cetus-hacker-and-return-160m/" target="_blank" class="clink">Read ↗</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ATTACK TYPE COVERAGE -->
+<div class="sec">
+  <div class="sh">
+    <div class="si si-g">⚔️</div>
+    <div>
+      <div class="sh-title">Attack Types Covered in Published Work</div>
+      <div class="sh-sub">Hacken's role asks for writing on specific exploit types. Here is Osato's published coverage of each one.</div>
+    </div>
+  </div>
+  <div class="atk-grid">
+    <div class="atk">
+      <div class="atk-icon">🔢</div>
+      <h4>Precision Loss and Rounding Errors</h4>
+      <p>The maths problem investigation covered Raft Finance, Midas Capital, Onyx Protocol, Compound forks, and Hundred Finance. The zkLend story followed a $9.5M rounding error to protocol shutdown. Expert interviews with auditors and security researchers included.</p>
+      <div class="atk-tag">6 protocols · Multiple expert interviews · Flash loan exploitation</div>
+    </div>
+    <div class="atk">
+      <div class="atk-icon">🔁</div>
+      <h4>Infinite Mint and Smart Contract Bugs</h4>
+      <p>Reported the Yearn Finance infinite mint attack. Explained how a maths error in the yETH contract let the attacker create 235 trillion tokens and drain the pool.</p>
+      <div class="atk-tag">Yearn Finance · $9M · 2025</div>
+    </div>
+    <div class="atk">
+      <div class="atk-icon">⚡</div>
+      <h4>Flash Loan Exploits</h4>
+      <p>Covered flash loan mechanics in the H1 2025 TRM Labs report. Flash loans and reentrancy attacks accounted for 12% of all losses in the period.</p>
+      <div class="atk-tag">TRM Labs H1 2025 Report</div>
+    </div>
+    <div class="atk">
+      <div class="atk-icon">🔑</div>
+      <h4>Private Key Compromise</h4>
+      <p>Reported the Stake.com hack where the transaction-authorisation service was breached. Also covered Bitget's $100M infrastructure attack in the TRM record report.</p>
+      <div class="atk-tag">Stake.com · Bitget · 2024/2025</div>
+    </div>
+    <div class="atk">
+      <div class="atk-icon">🌉</div>
+      <h4>Bridge Vulnerabilities</h4>
+      <p>Reported on the $190M Nomad Bridge exploit and traced 88 copycat wallets that drained funds through the same vulnerability using Coinbase on-chain data.</p>
+      <div class="atk-tag">Nomad Bridge · $190M · 2022/2025</div>
+    </div>
+    <div class="atk">
+      <div class="atk-icon">🪙</div>
+      <h4>Fake Token and Liquidity Pool Drain</h4>
+      <p>Reconstructed the Cetus $220M exploit step by step. The attacker used counterfeit tokens to manipulate pricing and drain liquidity across multiple pools.</p>
+      <div class="atk-tag">Cetus Exchange · $220M · 2025</div>
+    </div>
+    <div class="atk">
+      <div class="atk-icon">🕵️</div>
+      <h4>Nation-State and Supply Chain Attacks</h4>
+      <p>Covered Lazarus Group activity at Upbit and wrote the H1 2025 record report showing North Korean hackers stole 70% of all funds taken in the first six months of 2025.</p>
+      <div class="atk-tag">Lazarus Group · 70% of H1 2025 Losses</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ON-CHAIN FORENSICS -->
+<div class="sec">
+  <div class="sh">
+    <div class="si si-b">⛓️</div>
+    <div>
+      <div class="sh-title">On-chain Forensics as Journalism</div>
+      <div class="sh-sub">He uses block explorers, DefiLlama, TRM Labs data, and wallet tracking as standard reporting tools.</div>
+    </div>
+  </div>
+  <div class="onchain">
+    <div class="oc-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Verified On-chain Investigations
+    </div>
+    <div class="oc-row">
+      <div class="oc-num">1</div>
+      <div class="oc-content">
+        <h4>Cetus Exchange: Full Attack Chain Reconstruction</h4>
+        <p>Traced each step of the $220M exploit independently. Fake token creation, liquidity drain, cross-chain bridge to Ethereum, USDC conversion, and final wallet balance all documented from on-chain data before official confirmation.</p>
+        <div class="oc-amount">$220M · $37M attacker wallet identified and tracked</div>
+      </div>
+    </div>
+    <div class="oc-row">
+      <div class="oc-num">2</div>
+      <div class="oc-content">
+        <h4>Nomad Bridge: 88 Copycat Wallets Enumerated</h4>
+        <p>Used Coinbase on-chain data to identify 88 distinct wallet addresses that extracted $88M through the same vulnerability. Separated whitehat and blackhat activity by tracking whether funds were returned.</p>
+        <div class="oc-amount">$190M bridge exploit · 88 wallets traced</div>
+      </div>
+    </div>
+    <div class="oc-row">
+      <div class="oc-num">3</div>
+      <div class="oc-content">
+        <h4>Yearn Finance: Attacker Wallet Tracked to Tornado Cash</h4>
+        <p>Identified the $8M single-transaction drain from the StableSwap pool and tracked $3M sent to Tornado Cash as a laundering step. Published before Yearn's own post-mortem.</p>
+        <div class="oc-amount">$9M exploit · $3M to Tornado Cash confirmed on-chain</div>
+      </div>
+    </div>
+    <div class="oc-row">
+      <div class="oc-num">4</div>
+      <div class="oc-content">
+        <h4>Balancer: Live Attacker Monitoring Across 27 Forks</h4>
+        <p>Monitored the attacker's wallet in real time and found they were actively spawning new contracts across 27 Balancer forks. Published the warning before the full fork list was public, giving projects time to respond.</p>
+        <div class="oc-amount">$128M · 27 forks at risk · Real-time reporting</div>
+      </div>
+    </div>
+    <div class="oc-row">
+      <div class="oc-num">5</div>
+      <div class="oc-content">
+        <h4>H1 2025 Record Report: TRM Labs Forensics Interpreted</h4>
+        <p>Translated TRM Labs' forensic dataset into clear reporting. Identified that 80% of stolen funds came from private key and infrastructure attacks, quantified North Korea's $1.6B share, and explained why this represents a structural shift in the threat landscape.</p>
+        <div class="oc-amount">$2.1B total · 75 incidents · Record H1 in crypto history</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SYNDICATION -->
+<div class="synd">
+  <div class="synd-label">📡 Security Articles Published and Syndicated Across</div>
+  <div class="synd-row">
+    <span class="sb top">DL News</span>
+    <span class="sb top">The Block</span>
+    <span class="sb top">Yahoo Finance</span>
+    <span class="sb top">CoinTelegraph</span>
+    <span class="sb top">BeInCrypto</span>
+    <span class="sb">Bitcoinist</span>
+    <span class="sb">Inside Bitcoins</span>
+    <span class="sb">Ethereum World News</span>
+    <span class="sb">NewsBreak</span>
+    <span class="sb">BTCManager</span>
+    <span class="sb">Flipboard</span>
+    <span class="sb">Crypto.news</span>
+  </div>
+  <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:1rem">Yahoo Finance syndication confirms his security reporting clears institutional editorial standards.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- HIGHLIGHTS -->
+<div class="sec">
+  <div class="sh">
+    <div class="si si-g">✅</div>
+    <div>
+      <div class="sh-title">Highlights</div>
+      <div class="sh-sub">What he brings to Hacken, backed by published work.</div>
+    </div>
+  </div>
+  <div class="hl-grid">
+    <div class="hl">
+      <div class="chk">✓</div>
+      <div>
+        <h4>Smart contract exploit writing</h4>
+        <p>Yearn Finance infinite mint, Cetus fake token drain, Balancer reentrancy-adjacent bugs. All covered with technical accuracy and published to a wide audience.</p>
+      </div>
+    </div>
+    <div class="hl">
+      <div class="chk">✓</div>
+      <div>
+        <h4>Attack chain reconstruction</h4>
+        <p>He rebuilds exploits step by step from on-chain data. The Cetus report is a root cause analysis written for a general audience, the same format Hacken uses in its case studies.</p>
+      </div>
+    </div>
+    <div class="hl">
+      <div class="chk">✓</div>
+      <div>
+        <h4>Bridge vulnerability reporting</h4>
+        <p>Nomad Bridge $190M exploit covered in depth. He traced funds, categorised wallet types, and published findings before the official forensics report arrived.</p>
+      </div>
+    </div>
+    <div class="hl">
+      <div class="chk">✓</div>
+      <div>
+        <h4>Private key and infrastructure threats</h4>
+        <p>Reported private key compromises at Stake.com and Bitget. Co-authored the TRM report showing infrastructure attacks now make up 80% of all crypto theft losses.</p>
+      </div>
+    </div>
+    <div class="hl">
+      <div class="chk">✓</div>
+      <div>
+        <h4>Threat actor attribution</h4>
+        <p>Tied Lazarus Group activity to Upbit, Bybit, and the wider North Korea crypto theft programme. Connected state-sponsored hacking to the $2.1B H1 2025 record.</p>
+      </div>
+    </div>
+    <div class="hl">
+      <div class="chk">✓</div>
+      <div>
+        <h4>Technical to plain English</h4>
+        <p>A chemical engineering background means he reads technical documentation comfortably. He then writes about it in clear, simple language that any reader can follow.</p>
+      </div>
+    </div>
+    <div class="hl">
+      <div class="chk">✓</div>
+      <div>
+        <h4>AI tools in daily workflow</h4>
+        <p>He uses AI writing tools to research and draft content, then edits everything himself. He is comfortable building repeatable content systems that maintain quality at speed.</p>
+      </div>
+    </div>
+    <div class="hl">
+      <div class="chk">✓</div>
+      <div>
+        <h4>Audience range</h4>
+        <p>He has written security content for The Block's professional readers and for BeInCrypto's general audience. He knows how to adjust depth and language for both.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="close" style="margin:3rem 2rem">
+  <h2>What makes him right for Hacken</h2>
+  <p>Hacken publishes incident reports, attack chain walkthroughs, and security thought leadership every week. Osato has been writing exactly that kind of content for years as a journalist. He tracks live exploits, reads on-chain data, and turns complex vulnerability details into stories people actually read. He already knows the vocabulary, the tools, and the audience.</p>
+  <div class="tag-wrap">
+    <span class="ctag">Smart Contract Exploits ✓</span>
+    <span class="ctag">Flash Loans ✓</span>
+    <span class="ctag">Private Key Attacks ✓</span>
+    <span class="ctag">Bridge Vulnerabilities ✓</span>
+    <span class="ctag">On-chain Forensics ✓</span>
+    <span class="ctag">Threat Attribution ✓</span>
+    <span class="ctag">Technical Writing ✓</span>
+    <span class="ctag">AI Writing Tools ✓</span>
+    <span class="ctag">DeFi Security ✓</span>
+    <span class="ctag">Incident Reports ✓</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="fn">Osato Avan-Nomayo</div>
+  <div class="fr">DeFi Correspondent · DL News &nbsp;|&nbsp; formerly The Block · CoinTelegraph · BeInCrypto · Bitcoinist</div>
+  <a href="https://muckrack.com/osato-avan-nomayo/articles" target="_blank" class="cta">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    Full Portfolio on Muckrack
+  </a>
+  <div class="contacts">
+    <a href="tel:+2348111571785" class="cbtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.55 3.18 2 2 0 0 1 3.55 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.7a16 16 0 0 0 6.4 6.4l1.06-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +234 811 157 1785
+    </a>
+    <a href="mailto:sato.nomayo@gmail.com" class="cbtn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      sato.nomayo@gmail.com
+    </a>
+    <a href="http://www.linkedin.com/in/osato-avan-nomayo-a6308b171" target="_blank" class="cbtn li">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+  </div>
+  <div class="pub-links">
+    <a href="https://www.dlnews.com/authors/Osato-Avan-Nomayo/" target="_blank">DL News ↗</a>
+    <a href="https://www.theblock.co/author/osato-avan-nomayo" target="_blank">The Block ↗</a>
+    <a href="https://cointelegraph.com/authors/osato-avan-nomayo" target="_blank">CoinTelegraph ↗</a>
+    <a href="https://beincrypto.com/author/osato/" target="_blank">BeInCrypto ↗</a>
+  </div>
+</div>
+</body>
+</html>
